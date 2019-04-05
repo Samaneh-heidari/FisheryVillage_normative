@@ -1,0 +1,16 @@
+<repast.simphony.data2.engine.FileSinkDescriptor>
+  <name>DataCollector Values Satisfied</name>
+  <dataSet>Satisfied Values</dataSet>
+  <delimiter>,</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>tick</string>
+    <string>Satisfied values 0</string>
+    <string>Satisfied values 1</string>
+    <string>Satisfied values 2</string>
+    <string>Satisfied values 3</string>
+    <string>Satisfied values 4</string>
+  </sourceIds>
+  <fileName>file Sinks\ValuesSatisfied.txt</fileName>
+  <addTimeStamp>false</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>

@@ -1,0 +1,31 @@
+%value tree 1
+%waterTank, maxCapacity, minCapacity, maxFilledLevel, minFilledLevel, drainingAmount, minThresould, maxThresould,
+%node title, [list of children title separated by ","]
+%....
+value tree 1
+waterTank, 100,100,100,0,2,50,50
+POWER,[Authority,Wealth,Social recognition]
+Authority,[]
+Wealth,[]
+Social recognition,[]
+value tree 2
+waterTank, 100,100,100,0,2,50,50
+TRADITION,[Respect for tradition]
+Respect for tradition,[Sustain village,Be part of the community,Moderate]
+Sustain village,[]
+Be part of the community,[]
+Moderate,[]
+value tree 3
+waterTank, 100,100,100,0,2,50,50
+UNIVERSALISM,[Equality,Social justice,Wisdom,Good for environment,Unity with nature]
+Equality,[]
+Social justice,[Care for the weak]
+Care for the weak,[]
+Wisdom,[]
+Good for environment,[]
+Unity with nature,[]
+value tree 4
+waterTank, 100,100,100,0,2,50,50
+SELFDIRECTION,[Independent,Freedom]
+Freedom,[]
+Independent,[]

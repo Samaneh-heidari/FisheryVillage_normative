@@ -1,0 +1,49 @@
+<repast.simphony.data2.engine.DataSetDescriptor>
+  <name>N-Average Wealth per Neighborhood</name>
+  <type>AGGREGATE</type>
+  <inclTick>true</inclTick>
+  <inclBatchRun>false</inclBatchRun>
+  <inclRandomSeed>false</inclRandomSeed>
+  <scheduleParams>
+    <start>1.0</start>
+    <interval>1.0</interval>
+    <priority>-Infinity</priority>
+    <pType>LAST</pType>
+    <duration>-1.0</duration>
+    <frequency>REPEAT</frequency>
+    <hashCode>637114493</hashCode>
+  </scheduleParams>
+  <atEnd>false</atEnd>
+  <methodDataSources class="linked-hash-map">
+    <entry>
+      <string>avg wealth-CHEAP</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>avg wealth-CHEAP</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getAdultAndElderlyWealthAvg_CHEAP</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>avg wealth-STANDARD</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>avg wealth-STANDARD</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getAdultAndElderlyWealthAvg_STANDARD</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>avg wealth-EXPENSIVE</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>avg wealth-EXPENSIVE</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getAdultAndElderlyWealthAvg_EXPENSIVE</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+  </methodDataSources>
+  <countSources class="linked-hash-map"/>
+  <customNADataSources class="linked-hash-map"/>
+  <customAggDataSources class="linked-hash-map"/>
+</repast.simphony.data2.engine.DataSetDescriptor>

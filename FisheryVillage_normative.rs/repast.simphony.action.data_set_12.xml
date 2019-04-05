@@ -1,0 +1,94 @@
+<repast.simphony.data2.engine.DataSetDescriptor>
+  <name>Boat for graph</name>
+  <type>AGGREGATE</type>
+  <inclTick>true</inclTick>
+  <inclBatchRun>false</inclBatchRun>
+  <inclRandomSeed>false</inclRandomSeed>
+  <scheduleParams>
+    <start>1.0</start>
+    <interval>1.0</interval>
+    <priority>-Infinity</priority>
+    <pType>LAST</pType>
+    <duration>-1.0</duration>
+    <frequency>REPEAT</frequency>
+    <hashCode>-1389032365</hashCode>
+  </scheduleParams>
+  <atEnd>false</atEnd>
+  <methodDataSources class="linked-hash-map">
+    <entry>
+      <string>Boat 1 employee cap</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Boat 1 employee cap</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getBoat1EmployeeCap</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Boat 1 fishers</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Boat 1 fishers</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getBoat1FisherCount</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Boat 1 fish to catch normalized</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Boat 1 fish to catch normalized</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getBoat1FishToCatchNorm</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Boat 1 has captain normalized</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Boat 1 has captain normalized</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getBoat1HasCaptain</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Boat 2 employee cap</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Boat 2 employee cap</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getBoat2EmployeeCap</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Boat 2 fishers</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Boat 2 fishers</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getBoat2FisherCount</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Boat 2 fish to catch normalized</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Boat 2 fish to catch normalized</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getBoat2FishToCatchNorm</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Boat 2 has captain normalized</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Boat 2 has captain normalized</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getBoat2HasCaptain</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+  </methodDataSources>
+  <countSources class="linked-hash-map"/>
+  <customNADataSources class="linked-hash-map"/>
+  <customAggDataSources class="linked-hash-map"/>
+</repast.simphony.data2.engine.DataSetDescriptor>

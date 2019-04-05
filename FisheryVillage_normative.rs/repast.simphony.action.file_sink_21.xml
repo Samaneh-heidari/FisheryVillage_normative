@@ -1,0 +1,15 @@
+<repast.simphony.data2.engine.FileSinkDescriptor>
+  <name>Humans by age cluster</name>
+  <dataSet>Human by age</dataSet>
+  <delimiter>,</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>tick</string>
+    <string>N [0 - 17]</string>
+    <string>N [18 - 64]</string>
+    <string>N [65 - 84]</string>
+    <string>N [85 - ...]</string>
+  </sourceIds>
+  <fileName>file Sinks\Age.txt</fileName>
+  <addTimeStamp>false</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>

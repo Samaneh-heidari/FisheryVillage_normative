@@ -1,0 +1,15 @@
+<repast.simphony.data2.engine.FileSinkDescriptor>
+  <name>Ecosystem</name>
+  <dataSet>Ecosystem</dataSet>
+  <delimiter>,</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>tick</string>
+    <string>N Fish</string>
+    <string>N Fish danger level</string>
+    <string>N Fish caught</string>
+    <string>N Fish repopulated</string>
+  </sourceIds>
+  <fileName>file Sinks\Ecosystem.txt</fileName>
+  <addTimeStamp>false</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>

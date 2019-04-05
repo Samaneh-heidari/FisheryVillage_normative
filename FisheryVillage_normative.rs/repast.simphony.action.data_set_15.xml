@@ -1,0 +1,49 @@
+<repast.simphony.data2.engine.DataSetDescriptor>
+  <name>N-Population per Neighborhood</name>
+  <type>AGGREGATE</type>
+  <inclTick>true</inclTick>
+  <inclBatchRun>false</inclBatchRun>
+  <inclRandomSeed>false</inclRandomSeed>
+  <scheduleParams>
+    <start>1.0</start>
+    <interval>1.0</interval>
+    <priority>-Infinity</priority>
+    <pType>LAST</pType>
+    <duration>-1.0</duration>
+    <frequency>REPEAT</frequency>
+    <hashCode>-907830749</hashCode>
+  </scheduleParams>
+  <atEnd>false</atEnd>
+  <methodDataSources class="linked-hash-map">
+    <entry>
+      <string>adults in cheap group</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>adults in cheap group</id>
+        <className>fisheryvillage.property.municipality.Council</className>
+        <methodName>getNumberOfAdultsCheapNeighborhood</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>adults in standard group</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>adults in standard group</id>
+        <className>fisheryvillage.property.municipality.Council</className>
+        <methodName>getNumberOfAdultsStandardNeighborhood</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>adults in expensive group</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>adults in expensive group</id>
+        <className>fisheryvillage.property.municipality.Council</className>
+        <methodName>getNumberOfAdultsEXPENSIVENeighborhood</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+  </methodDataSources>
+  <countSources class="linked-hash-map"/>
+  <customNADataSources class="linked-hash-map"/>
+  <customAggDataSources class="linked-hash-map"/>
+</repast.simphony.data2.engine.DataSetDescriptor>

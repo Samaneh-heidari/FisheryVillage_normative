@@ -1,0 +1,74 @@
+<repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
+  <name>N-cheap neighbourhood / value</name>
+  <dataSet>N-popuation per neighborhood-per value</dataSet>
+  <xAxisLabel>Tick Count</xAxisLabel>
+  <yAxisLabel></yAxisLabel>
+  <chartTitle>N-cheap neighbourhood / value</chartTitle>
+  <type>TIME_SERIES</type>
+  <background>
+    <red>192</red>
+    <green>192</green>
+    <blue>192</blue>
+    <alpha>255</alpha>
+  </background>
+  <gridLineColor>
+    <red>255</red>
+    <green>255</green>
+    <blue>255</blue>
+    <alpha>255</alpha>
+  </gridLineColor>
+  <showGrid>true</showGrid>
+  <showLegend>true</showLegend>
+  <seriesIds>
+    <entry>
+      <string>cheap-universalism</string>
+      <SeriesData>
+        <label>cheap-universalism</label>
+        <color>
+          <red>0</red>
+          <green>204</green>
+          <blue>51</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>cheap-selfdirection</string>
+      <SeriesData>
+        <label>cheap-selfdirection</label>
+        <color>
+          <red>255</red>
+          <green>102</green>
+          <blue>255</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>cheap-power</string>
+      <SeriesData>
+        <label>cheap-power</label>
+        <color>
+          <red>255</red>
+          <green>51</green>
+          <blue>51</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>cheap-tradition</string>
+      <SeriesData>
+        <label>cheap-tradition</label>
+        <color>
+          <red>51</red>
+          <green>51</green>
+          <blue>255</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+  </seriesIds>
+  <dataValueIds/>
+  <plotRangeLength>-1</plotRangeLength>
+</repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
