@@ -12,7 +12,7 @@ import valueframework.common.Log;
 public class Group {
 	private int id;
 	private String title;
-
+ 
 	//in the case of neighboring groups, group title is the houseType.
 	
 	public Group(int gid, String ntitle){

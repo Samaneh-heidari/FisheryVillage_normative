@@ -182,13 +182,14 @@ public final class Constants {
 	 */
 	
 	public static final char[] validOperators = {'>','=','<'};
-	public static final String CHEAP_DONATION_DEFAULT_NORM_TITLE = "200 < |donation| < 1000";
-	public static final String STANDARD_DONATION_DEFAULT_NORM_TITLE = "50 < |donation| < 100";
-	public static final String EXPENSIVE_DONATION_DEFAULT_NORM_TITLE = "|donation| < 50";
+	public static final String CHEAP_DONATION_DEFAULT_NORM_TITLE = "300 < |donation| < 600";
+	public static final String STANDARD_DONATION_DEFAULT_NORM_TITLE = "200 < |donation| < 250";
+	public static final String EXPENSIVE_DONATION_DEFAULT_NORM_TITLE = "400 < |donation| < 500";
 	public static final List NORM_TYPE_LIST = Collections.unmodifiableList(new ArrayList<String>() {{
 	    add("ACTION");
 	}});
-	
+	public static final int NORM_INIT_REPETITION = 50;
+	public static final int NORM_REPETITION_NEW_MEMBER = 1;
 	
 	/*
 	 * variables of function of following neighbors behavior percentage over time
@@ -232,4 +233,5 @@ public final class Constants {
 	public static final String[] SELFDIRECTION_NEIGHBORHOOD_PRIORITY = {HouseType.EXPENSIVE.name(), HouseType.STANDARD.name(), HouseType.CHEAP.name()};
 	public static final String[] TRADITION_NEIGHBORHOOD_PRIORITY = {HouseType.CHEAP.name(), HouseType.STANDARD.name(), HouseType.EXPENSIVE.name()};
 	public static final String[] UNIVERSALISM_NEIGHBORHOOD_PRIORITY = {HouseType.CHEAP.name(), HouseType.STANDARD.name(), HouseType.EXPENSIVE.name()};
+	
 }

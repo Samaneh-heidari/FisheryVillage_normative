@@ -60,7 +60,7 @@ public class FisheryVillageContextBuilder implements ContextBuilder<Object> {
 		}
 		else {
 			RepastParam.setRepastParameters();
-			Logger.setLoggerAll(true, true, false, false, true, false);
+			Logger.setLoggerAll(true, true, false, true, true, false);
 //			Log.disableLogger();
 		}
 		
@@ -273,7 +273,12 @@ public class FisheryVillageContextBuilder implements ContextBuilder<Object> {
 		
 		final ArrayList<Resident> residents = SimUtils.getObjectsAllRandom(Resident.class);
 		Logger.logMain("- Run Human.stepDonate");
+		double[] avgDonationList = HumanUtils.avgDonationOfNeighbors();
+		int livingGroupId = -1;
 		for (final Resident resident: residents) {
+			livingGroupId = resident.getLivingGroupId();
+			if(livingGroupId >= 0)
+				resident.setAvgNeighborsDonationAmount(avgDonationList[resident.getLivingGroupId()]);
 			resident.stepDonate();
 		}
 		
@@ -285,6 +290,8 @@ public class FisheryVillageContextBuilder implements ContextBuilder<Object> {
 		Logger.logMain("- Run EventHall.stepPerformSocialEvent");
 		SimUtils.getEventHall().stepPerformSocialEvent();
 	}
+
+	
 
 	/**
 	 * Step 5 month: monthly payments and death
@@ -442,16 +449,18 @@ public class FisheryVillageContextBuilder implements ContextBuilder<Object> {
 		else
 		{
 			Logger.logMain("Initialize " + Constants.INITIAL_POPULATION_SIZE + " humans from scratch");
-			for (int i = 0; i < Constants.INITIAL_POPULATION_SIZE; ++i) {
-	
+			for (int i = 0; i < Constants.INITIAL_POPULATION_SIZE; ++i) {	
 				// Humans are automatically added to the context and placed in the grid
 				Resident resident = new Resident(HumanUtils.getNewHumanId(), SimUtils.getRandomBoolean(), false,
 									RandomHelper.nextIntFromTo(Constants.HUMAN_INIT_MIN_AGE, Constants.HUMAN_INIT_MAX_AGE),
 						  			RandomHelper.nextIntFromTo(0, Constants.HUMAN_INIT_STARTING_MONEY) );
-				resident.initialHousing();
 				Logger.logInfo("Create H" + resident.getId() + ", age: " + resident.getAge() );
-				Logger.logDebug("Create H" + resident.getId() + ", age: " + resident.getAge() +  ", houseType : " + HumanUtils.getLivingPlace(resident).getName() + ", " + HumanUtils.getLivingPlace(resident).getLabel());
 			}
+			Logger.logDebug("initialize housing");
+			for (final Resident resident: SimUtils.getObjectsAllRandom(Resident.class)){				
+				resident.initialHousing();
+			}
+			
 		}
 		
 		HumanUtils.printAverageValues();
@@ -517,7 +526,7 @@ public class FisheryVillageContextBuilder implements ContextBuilder<Object> {
 		for (Human hmn : allHuman) {
 			HouseType house = HumanUtils.getLivingPlaceType(hmn);
 			Logger.logDebug("H"+ hmn.getId() + " is generating group : house " + house + ", name " + house.name());
-			hmn.becomeGroupMemberByGroupName(house.name());
+			hmn.becomeGroupMemberByGroupName(house.name(), Constants.NORM_INIT_REPETITION);
 		}
 	}
 	

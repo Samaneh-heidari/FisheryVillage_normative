@@ -17,4 +17,6 @@ public enum HouseType {
 	public double getSocialStatusHouse() {
 		return socialStatusHouse;
 	}
+	
+	
 }

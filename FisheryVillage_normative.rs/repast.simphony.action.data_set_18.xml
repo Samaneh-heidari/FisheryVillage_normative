@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>N-popuation per neighborhood-per value</name>
+  <name>N-Average Wealth per Neighborhood</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -11,115 +11,34 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>1446841695</hashCode>
+    <hashCode>637114493</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>expensive-power</string>
+      <string>avg wealth-CHEAP</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>expensive-power</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsEXPENSIVEPower</methodName>
+        <id>avg wealth-CHEAP</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getAdultAndElderlyWealthAvg_CHEAP</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>expensive-selfdirection</string>
+      <string>avg wealth-STANDARD</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>expensive-selfdirection</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsEXPENSIVESelfdirection</methodName>
+        <id>avg wealth-STANDARD</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getAdultAndElderlyWealthAvg_STANDARD</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>expensive-tradition</string>
+      <string>avg wealth-EXPENSIVE</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>expensive-tradition</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsEXPENSIVETradition</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>expensive-universalsim</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>expensive-universalsim</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsEXPENSIVEUniversalism</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>standard-power</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>standard-power</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsStandardPower</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>standard-selfdirection</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>standard-selfdirection</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsStandardSelfdirection</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>standard-tradition</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>standard-tradition</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsStandardTradition</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>standard-universalsim</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>standard-universalsim</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsStandardUniversalism</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>cheap-power</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>cheap-power</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsCheapPower</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>cheap-selfdirection</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>cheap-selfdirection</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsCheapSelfdirection</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>cheap-tradition</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>cheap-tradition</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsCheapTradition</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>cheap-universalism</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>cheap-universalism</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsCheapUniversalism</methodName>
+        <id>avg wealth-EXPENSIVE</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getAdultAndElderlyWealthAvg_EXPENSIVE</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

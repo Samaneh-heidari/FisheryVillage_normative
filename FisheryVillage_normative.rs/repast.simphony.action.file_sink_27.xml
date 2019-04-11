@@ -1,14 +1,15 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>DataCollector Donation</name>
-  <dataSet>DataCollector Donation</dataSet>
+  <name>Ecosystem</name>
+  <dataSet>Ecosystem</dataSet>
   <delimiter>,</delimiter>
   <format>TABULAR</format>
   <sourceIds class="linked-hash-set">
     <string>tick</string>
-    <string>No money percentage</string>
-    <string>No donation percentage</string>
-    <string>Donation percentage</string>
+    <string>N Fish</string>
+    <string>N Fish danger level</string>
+    <string>N Fish caught</string>
+    <string>N Fish repopulated</string>
   </sourceIds>
-  <fileName>file Sinks\Donation.txt</fileName>
+  <fileName>file Sinks\Ecosystem.txt</fileName>
   <addTimeStamp>false</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

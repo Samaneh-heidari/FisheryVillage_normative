@@ -1,15 +1,15 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>Values</name>
-  <dataSet>Human avg values</dataSet>
+  <name>Humans by age cluster</name>
+  <dataSet>Human by age</dataSet>
   <delimiter>,</delimiter>
   <format>TABULAR</format>
   <sourceIds class="linked-hash-set">
     <string>tick</string>
-    <string>Avg tradition level</string>
-    <string>Avg power level</string>
-    <string>Avg self-direction level</string>
-    <string>Avg universalism level</string>
+    <string>N [0 - 17]</string>
+    <string>N [18 - 64]</string>
+    <string>N [65 - 84]</string>
+    <string>N [85 - ...]</string>
   </sourceIds>
-  <fileName>file Sinks\Values.txt</fileName>
+  <fileName>file Sinks\Age.txt</fileName>
   <addTimeStamp>false</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

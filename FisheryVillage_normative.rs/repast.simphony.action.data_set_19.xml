@@ -1,98 +1,125 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Human by status</name>
+  <name>N-popuation per neighborhood-per value</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
     <start>1.0</start>
-    <interval>4.0</interval>
+    <interval>1.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1614299654</hashCode>
+    <hashCode>1446841695</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>N Fishers</string>
+      <string>expensive-power</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>N Fishers</id>
+        <id>expensive-power</id>
         <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfFishers</methodName>
+        <methodName>getNumberOfAdultsEXPENSIVEPower</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>N Teachers</string>
+      <string>expensive-selfdirection</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>N Teachers</id>
-        <className>fisheryvillage.property.municipality.School</className>
-        <methodName>getTeacherCount</methodName>
+        <id>expensive-selfdirection</id>
+        <className>fisheryvillage.property.municipality.Council</className>
+        <methodName>getNumberOfAdultsEXPENSIVESelfdirection</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>N Unemployed</string>
+      <string>expensive-tradition</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>N Unemployed</id>
+        <id>expensive-tradition</id>
         <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfUnemployed</methodName>
+        <methodName>getNumberOfAdultsEXPENSIVETradition</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>N Workers outside</string>
+      <string>expensive-universalsim</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>N Workers outside</id>
+        <id>expensive-universalsim</id>
         <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfWorkersOutside</methodName>
+        <methodName>getNumberOfAdultsEXPENSIVEUniversalism</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>N F. workers</string>
+      <string>standard-power</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>N F. workers</id>
+        <id>standard-power</id>
         <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfFactoryWorkers</methodName>
+        <methodName>getNumberOfAdultsStandardPower</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>N Caretakers</string>
+      <string>standard-selfdirection</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>N Caretakers</id>
+        <id>standard-selfdirection</id>
         <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfElderlyCaretakers</methodName>
+        <methodName>getNumberOfAdultsStandardSelfdirection</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>N Mayor</string>
+      <string>standard-tradition</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>N Mayor</id>
+        <id>standard-tradition</id>
         <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfMayor</methodName>
+        <methodName>getNumberOfAdultsStandardTradition</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>N F. boss</string>
+      <string>standard-universalsim</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>N F. boss</id>
+        <id>standard-universalsim</id>
         <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfBoss</methodName>
+        <methodName>getNumberOfAdultsStandardUniversalism</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>N. Captain</string>
+      <string>cheap-power</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>N. Captain</id>
+        <id>cheap-power</id>
         <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfCaptains</methodName>
+        <methodName>getNumberOfAdultsCheapPower</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>cheap-selfdirection</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>cheap-selfdirection</id>
+        <className>fisheryvillage.property.municipality.Council</className>
+        <methodName>getNumberOfAdultsCheapSelfdirection</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>cheap-tradition</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>cheap-tradition</id>
+        <className>fisheryvillage.property.municipality.Council</className>
+        <methodName>getNumberOfAdultsCheapTradition</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>cheap-universalism</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>cheap-universalism</id>
+        <className>fisheryvillage.property.municipality.Council</className>
+        <methodName>getNumberOfAdultsCheapUniversalism</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

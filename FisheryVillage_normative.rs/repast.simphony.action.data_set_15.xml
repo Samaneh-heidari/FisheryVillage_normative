@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>N-Population per Neighborhood</name>
+  <name>N-Donation amount per neighborhood</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -11,34 +11,34 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-907830749</hashCode>
+    <hashCode>979418584</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>adults in cheap group</string>
+      <string>cheapGroup_donation</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>adults in cheap group</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsCheapNeighborhood</methodName>
+        <id>cheapGroup_donation</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>donationAmountCheapNeighborhood</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>adults in standard group</string>
+      <string>standardGroup_donation</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>adults in standard group</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsStandardNeighborhood</methodName>
+        <id>standardGroup_donation</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>donationAmountSTANDARDNeighborhood</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>adults in expensive group</string>
+      <string>expensiveGroup_donation</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>adults in expensive group</id>
-        <className>fisheryvillage.property.municipality.Council</className>
-        <methodName>getNumberOfAdultsEXPENSIVENeighborhood</methodName>
+        <id>expensiveGroup_donation</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>donationAmountEXPENSIVENeighborhood</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

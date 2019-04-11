@@ -13,6 +13,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.velocity.runtime.directive.Foreach;
+
 import lombok.Getter;
 import lombok.Setter;
 import normFramework.Group;
@@ -1012,7 +1014,7 @@ public class Human {
 		this.lastDonationAmount = lastDonationAmount;
 	}
 	
-	public void becomeGroupMember(Group gr){
+	public void becomeGroupMember(Group gr, int normInitRepetition){
 		boolean alreadyAmember = false;
 		for (Group myGrp : groupList) {			
 			if(myGrp.getId() == gr.getId()){
@@ -1023,27 +1025,29 @@ public class Human {
 		if(!alreadyAmember){
 			Log.printLog("H" + getId() + " became a member of G" + gr.getId() + " entitled " + gr.getTitle());
 			groupList.add(gr);
-			addNeighborhoodNorms(gr.getId());
+			addNeighborhoodNorms(gr.getId(), normInitRepetition);
 		}else
 			Log.printLog("H" + getId() + " is already a member of group " + gr.getId()+ " entitled " + gr.getTitle()) ;
 	}
 	
 	
-	private void addNeighborhoodNorms(int groupID) {
+	private void addNeighborhoodNorms(int groupID, int normInitRepetition) {
 		Logger.logDebug("H" + getId() + " is becoming group member G" + groupID + " and trying to add norms. normList " + ((normList != null) ? normList.size() : "null"));
 		Collection<Norm> norms = new ArrayList<Norm>();
 		String livingGroupName = getLivingGroupName();
 		Norm groupNorm = null;
 		if(livingGroupName.equals(HouseType.CHEAP.name())){
 			groupNorm = new Norm((String) Constants.NORM_TYPE_LIST.get(0), Constants.CHEAP_DONATION_DEFAULT_NORM_TITLE, groupID);
-			groupNorm.setRepetition(1);			
+			groupNorm.setRepetition(normInitRepetition);			
 		}else if(livingGroupName.equals(HouseType.STANDARD.name())){
 			groupNorm = new Norm((String) Constants.NORM_TYPE_LIST.get(0), Constants.STANDARD_DONATION_DEFAULT_NORM_TITLE, groupID);
-			groupNorm.setRepetition(1);
+			groupNorm.setRepetition(normInitRepetition);
 		}else if(livingGroupName.equals(HouseType.EXPENSIVE.name())){
 			groupNorm = new Norm((String) Constants.NORM_TYPE_LIST.get(0), Constants.EXPENSIVE_DONATION_DEFAULT_NORM_TITLE, groupID);
-			groupNorm.setRepetition(1);
+			groupNorm.setRepetition(normInitRepetition);
 		}
+		else
+			groupNorm = null;
 //		normList.clear();//TODO: here when the agent change the living group, he will forget all the norms he had in the 
 		//previous group. But, it can take the norms that has been internalized b.
 		//This might be how a norm will change in a group
@@ -1086,13 +1090,12 @@ public class Human {
 		String groupTtl = "";
 		for (Group myGrp : groupList) {
 			groupTtl = myGrp.getTitle();
-			if(groupTtl.equals(HouseType.CHEAP.name()) | 
-					groupTtl.equals(HouseType.EXPENSIVE.name()) |
-					groupTtl.equals(HouseType.HOMELESS.name()) |
-					groupTtl.equals(HouseType.STANDARD.name()) |
-					groupTtl.equals(HouseType.WITH_OTHERS.name())){
-				numOfGroups ++;
-				gId = myGrp.getId();
+			for (HouseType grName : HouseType.values()) {
+				if(groupTtl.equals(grName.name())){
+					numOfGroups++;
+					gId = myGrp.getId();
+					break;
+				}
 			}				
 		}
 		if(numOfGroups <=1 )
@@ -1127,7 +1130,7 @@ public class Human {
 	}
 	
 	public Collection<Norm> getNormListByGroupId(int groupID){
-		System.out.println("H" + getId() + " get norm list " + normList.get(groupID));
+//		System.out.println("H" + getId() + " get norm list " + normList.get(groupID));
 		return normList.get(groupID);
 	}
 
@@ -1235,10 +1238,10 @@ public class Human {
 		//TODO: for now we look for the comparative sign and the number after that as we only have donation amount as a norm
 		// we implemented a simple sample of it.
 		Logger.logDebug("H" + getId() + " is checking normative action of his neighbors G" + groupID +", avgNeighbors " + donationAmount);
-		Logger.logDebug("H" + getId() + " is checking normative action of his neighbors, normlist " + (normList != null ? normList.size() : "null"));
+//		Logger.logDebug("H" + getId() + " is checking normative action of his neighbors, normlist " + (normList != null ? normList.size() : "null"));
 		ArrayList<String> normativeActions  = null;
 		normativeActions = findNormActionOfGroup(donationAmount, groupID);
-		if(normativeActions.size() <= 0)			
+		if(normativeActions !=null && normativeActions.size() <= 0)			
 			Log.printLog("H" + getId() + "; There is no norm in group G" +groupID + " that matches the action");
 		return normativeActions;
 	}
@@ -1259,9 +1262,28 @@ public class Human {
 		return returnedNormTitle;
 	}
 
-
+	protected String getMinNotRepitiedNorm(ArrayList<String> normativeActions, int groupID) {
+		double minRepetition = Integer.MAX_VALUE;
+		String returnedNormTitle = "";
+		Logger.logDebug("H"+ getId() + " in getMinNotRepitiedNorm, normativeActions : " + normativeActions);
+		for (Norm norm : normList.get(groupID)) {
+			for (String normTtl : normativeActions) {
+				if(norm.getTitle().equals(normTtl)){
+					Logger.logDebug("H"+ getId() + " normTtl : " + normTtl);
+					if(norm.getNoRepetition() < minRepetition){
+						minRepetition = norm.getNoRepetition();
+						returnedNormTitle = normTtl;
+					}
+				}						
+			}
+		}
+		return returnedNormTitle;
+	}
+	
 	private ArrayList<String> findNormActionOfGroup(double avgNeighborsDonationAmount, int groupID) {
 		ArrayList<String> normativeActions = new ArrayList<String>();		
+		Logger.logDebug("H"+ getId() + " normlist.get(G" + groupID + ") is " + normList.get(groupID));
+		if(normList.get(groupID) != null)
 		for (Norm norm : normList.get(groupID)) {
 			if(norm == null | norm.equals("")) //he deons't have this norm for group groupID
 				continue;
@@ -1316,7 +1338,7 @@ public class Human {
 		return groupId;
 	}
 
-	public void becomeGroupMemberByGroupName(String groupName) {
+	public void becomeGroupMemberByGroupName(String groupName, int normInitRepetition) {
 		leaveGroup(getLivingGroupId());
 		Group group = null; 
 		Logger.logDebug("H" + getId() + " is calling becomeGroupMemberByGroupName, gname " + groupName);
@@ -1335,7 +1357,7 @@ public class Human {
 		}
 		
 		if(group != null)
-			becomeGroupMember(group);
+			becomeGroupMember(group, normInitRepetition);
 		else
 			Log.printError("H" + getId() + " couldn't find the correct houseType " + groupName);
 	}

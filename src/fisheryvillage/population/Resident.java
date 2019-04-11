@@ -1,12 +1,14 @@
 package fisheryvillage.population;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import org.apache.batik.bridge.NoRepaintRunnable;
 import org.apache.batik.dom.svg.LiveAttributeException;
 import org.apache.velocity.runtime.directive.Foreach;
 
@@ -54,6 +56,9 @@ public final class Resident extends Human {
 	private boolean canOrganize = false;
 	private int graphDonateType = -1; //-1: undefined, 0: donation not possible, 1: not donate, 2: donate to council
 	private int graphEventType = -1; //-1: undefined, 0: no action possible, 1:OF, 2:OC, 3:AF, 4:AC
+
+	private double avgGroupDonationAmount; 
+	
 
 	
 	public Resident(int id, boolean gender, boolean foreigner, int age, double money) {
@@ -263,10 +268,10 @@ public final class Resident extends Human {
 	}
 
 	public void stepDonate() {
-		
 		if (getAge() < Constants.HUMAN_ADULT_AGE || getAge() >= Constants.HUMAN_ELDERLY_CARE_AGE
 				|| BatchRun.getRunningCondition() == RunningCondition.NO_DONATION
 				|| BatchRun.getRunningCondition() == RunningCondition.NO_EV_AND_DON) {
+			Log.printDebug("H"+ getId() + " is out of donation age range");
 			return ;
 		}
 		
@@ -276,6 +281,7 @@ public final class Resident extends Human {
 		possibleActions.add("Donate nothing");
 		if ((getLeftoverMoney() > 0 && getMoney() > Constants.MONEY_DANGER_LEVEL) || getMoney() > Constants.DONATE_MONEY_MINIMUM_SAVINGS_WITHOUT_INCOME) {
 			possibleActions.add("Donate to council");
+			Log.printDebug("H" + getId() + " added donate to council as a possible action");
 		}
 		else {
 			Logger.logInfo("H" + getId() + " donation not possible, not enough money or income");
@@ -291,7 +297,11 @@ public final class Resident extends Human {
 
 		/*****************
 		 * normative decision
-		*****************/
+		*****************/		
+		int neighborId = getLivingGroupId();
+//		double avgNeighborsDonationAmount = getAverageDonationAmountOfGroupMates(neighborId);
+//		Logger.logDebug("H"+ getId() + " avgGroupDonationAmount : " + avgGroupDonationAmount);
+		stepUpdateRepetitionNorms(avgGroupDonationAmount, neighborId);
 		
 		double donationAmount = calculateNormativeDonationAmount();
 		if (actionToDo != null) {
@@ -324,46 +334,52 @@ public final class Resident extends Human {
 		ArrayList<House> availableProperties = SimUtils.getPropertyAvailableAllRandom(House.class);
 		Vector<ArrayList<House>> availablePropertiesSorted = sortPropertiesByValue(availableProperties, true);
 		
-		if(tick < 1)
+		if(tick < 1){
 			housing(availablePropertiesSorted);
+			initializeLastDonationAmount();
+		}
 	}
 	
+	private void initializeLastDonationAmount() {		
+		Collection<Norm> normList = getNormListByGroupId(getLivingGroupId());
+		if(normList != null){
+			double donationAmount = getNormativeAmountFromRange(normList.iterator().next().getTitle());
+			Logger.logDebug("H" + getId() + " initialized his lastDonationAmount by " + donationAmount);
+			setLastDonationAmount(donationAmount);
+		}
+		
+	}
+
 	public void housing(Vector<ArrayList<House>> availablePropertiesSorted){
 		if (getAge() < Constants.HUMAN_ADULT_AGE || getAge() >= Constants.HUMAN_ELDERLY_CARE_AGE) {
 			socialStatus.setSocialStatusHouse(HumanUtils.getLivingPlaceType(this));
 			return ;
 		}
 		
-//		if (condition) {
-//			Logger.logDebug("H" + getId() + " owninghouse:" + HumanUtils.isOwningHouse(this) + ", status : " + getStatus());
-//			if () {
-				for(ArrayList<House> houseArr : availablePropertiesSorted){
-					Logger.logDebug("H" + getId() + " with "+ getMoney() + "$ wants to buy a house " + houseArr.toString());
-				
-					for (House house : houseArr) {
-						if (getMoney() > house.getPrice()) {
-							actionBuyHouse(house);
-							return;
-						}
-					}
-//				}
-			}
-			
-			House ownedHouse = HumanUtils.getOwnedHouse(this);
-			if (ownedHouse != null) {
-				// Sell house if in relationship and not single and owns a house
-				if (!isSingle() && !HumanUtils.isLivingTogetherWithPartner(this)) { 
-					actionSellHouse(ownedHouse);
+		for(ArrayList<House> houseArr : availablePropertiesSorted){
+			Logger.logDebug("H" + getId() + " with "+ getMoney() + "$ wants to buy a house " + houseArr.toString());
+		
+			for (House house : houseArr) {
+				if (getMoney() > house.getPrice()) {
+					actionBuyHouse(house);
 					return;
 				}
-				if (getLeftoverMoney() < 0 && getMoney() < Constants.MONEY_DANGER_LEVEL) {
-					if (ownedHouse.getHouseType() != HouseType.CHEAP) {
-						actionSellHouse(ownedHouse);
-					}
+			}
+		}
+			
+		House ownedHouse = HumanUtils.getOwnedHouse(this);
+		if (ownedHouse != null) {
+			// Sell house if in relationship and not single and owns a house
+			if (!isSingle() && !HumanUtils.isLivingTogetherWithPartner(this)) { 
+				actionSellHouse(ownedHouse);
+				return;
+			}
+			if (getLeftoverMoney() < 0 && getMoney() < Constants.MONEY_DANGER_LEVEL) {
+				if (ownedHouse.getHouseType() != HouseType.CHEAP) {
+					actionSellHouse(ownedHouse);
 				}
 			}
-//		}
-		
+		}
 		Logger.logDebug("H" + getId() + " check this human");
 		socialStatus.setSocialStatusHouse(HumanUtils.getLivingPlaceType(this));
 	}
@@ -488,7 +504,7 @@ public final class Resident extends Human {
 		Logger.logDebug("H" + getId() + " is calling actionBuyHouse : " + houseName);
 		addMoney(-1 * hs.getPrice());
 		connectProperty(hs.getId());
-		becomeGroupMemberByGroupName(houseName);
+		becomeGroupMemberByGroupName(houseName, Constants.NORM_REPETITION_NEW_MEMBER);
 		Logger.logAction("H" + getId() + " bought house:" + HumanUtils.getOwnedHouse(this));
 	}
 	
@@ -853,38 +869,36 @@ public final class Resident extends Human {
 	private double calculateNormativeDonationAmount() {
 		//get avg neighbors; get preference; calculate multiplication factors; weighted sum
 		int neighborId = getLivingGroupId();
-		double avgNeighborsDonationAmount = getAverageDonationAmountOfGroupMates(neighborId);
-		setMyValueBasedDonation(calculateValueBasedDonationAmount(neighborId));
+		setMyValueBasedDonation(calculateValueBasedDonationAmount());
 		double[] prvGrpNormProbAmt = calculatePreferenceAccordingToPreviousGroups(neighborId);
 		double[] otherGrpNormProbAmt = calculatePreferenceAccordingToOtherGroups(neighborId);
 		//it is an array with 2 elements. the first one is probability and the second one is the norm
-		boolean ifLivingIndependent = (neighborId == 0 | neighborId == 1 | neighborId == 2);//TODO:gourpIds needs to be constants
+		boolean ifLivingIndependent = (neighborId == 0 | neighborId == 1 | neighborId == 2);
+		//TODO:gourpIds needs to be constants
 		double normativeDonationAmount = 0;
-
+		
 		if(ifLivingIndependent ){		
-			System.out.println("H" + getId() + " is living independently in G" + neighborId);
+//			Logger.logDebug("H" + getId() + " is living independently in G" + neighborId );
 			//calculating norm repetition
-			String normativeAction = updateRepetitionGroupNorm(neighborId, avgNeighborsDonationAmount);
-			
+			String normativeAction = getRepetitionGroupNorm(neighborId, avgGroupDonationAmount);
+			double groupNormativeAmount = getNormativeAmountFromRange(normativeAction);
 			//calculating follow_percentage neighbors or personal preference
 			double followNeighborsProbability = calculateFollowingNeighborsProbability(neighborId, normativeAction);
 			double followPreferenceProb = 1.0-followNeighborsProbability;
-			
+			Logger.logDebug("H" + getId() + ", followNeighborsProb = " + followNeighborsProbability);
 			double considerOtherGrProb = otherGrpNormProbAmt[0] * Constants.CONSIDERING_OTHER_GROUPS_PERCENTAGE;
 			double considerPrvGrProb = prvGrpNormProbAmt[0] * Constants.CONSIDERING_PREVIOUS_GROUPS_PERCENTAGE;
 			double considerValueBasedProb = followPreferenceProb - considerOtherGrProb-considerPrvGrProb;
 			
 			//calculating normative donation amount
-//			normativeDonationAmount = followNeighborsProbability * avgNeighborsDonationAmount + followPreferenceProb * myPreferredDonation;
-			normativeDonationAmount = followNeighborsProbability * avgNeighborsDonationAmount +
+			normativeDonationAmount = followNeighborsProbability * groupNormativeAmount +
 									  considerValueBasedProb * getMyValueBasedDonation() +
 									  considerOtherGrProb * otherGrpNormProbAmt[1] +
 									  considerPrvGrProb * prvGrpNormProbAmt[1];
+			Logger.logInfo("H" + getId() + " normativeDoantionAmount is : " + normativeDonationAmount);
 		}
 		else
 			System.out.println("H" + getId() + " is living with others or homeless, G" + neighborId);
-		updateRepetitionOfPrviousNorms(normativeDonationAmount, neighborId);
-		//The reason that we don't update other group's norm is that those norms can be updated only based on observation of what the members do
 		return normativeDonationAmount;
 	}
 	
@@ -893,9 +907,7 @@ public final class Resident extends Human {
 		for(int grId: getNormList().keySet()){
 			if(grId == currentGroup || isMember(grId))
 				continue;
-			for(Norm norm: getNormList().get(grId)){
-				updateRepetitionGroupNorm(grId, normativeDonationAmount);
-			}
+			getRepetitionGroupNorm(grId, normativeDonationAmount);
 		}
 	}
 
@@ -942,10 +954,11 @@ public final class Resident extends Human {
 		int noRepetition = getNoRepetition(neighborId, normativeAction);
 		double followNeighborsProbability = 0;
 		//this function can be changed based on modelers preference
-		if(normativeAction.equals(null) || normativeAction.equals(""))
+		if(normativeAction.equals(null) || normativeAction.equals("")){
+			Logger.logDebug("H"+ getId() + ", normativeAction is null" );			
 			return followNeighborsProbability;
-		if(repetition < 0 ){//norm list is null
-			Log.printError("H"+ getId() + " normList is null");
+		}if(repetition < 0 ){//norm list is null
+			Log.printError("H"+ getId() + " normList is null. repetition : " + repetition + " noRepetition : " + noRepetition);
 			return followNeighborsProbability;
 		}
 		
@@ -953,15 +966,19 @@ public final class Resident extends Human {
 			if(repetition < Constants.T_ADOPTATION){
 //				call observation function
 				followNeighborsProbability = observationFunction(repetition);
+				Logger.logDebug("H"+ getId() + " is in observation phase for normativeAction " + normativeAction);				
 			} else if(repetition < Constants.T_INTERNALIZATION){
-//				call adoption function
+//				call internalization function
+				Logger.logDebug("H"+ getId() + " is in adoptation phase for normativeAction " + normativeAction);
 				followNeighborsProbability = adoptionFunction(repetition);
 			}else{
 //				call internalization function
+				Logger.logDebug("H"+ getId() + " is in internalization phase for normativeAction " + normativeAction);
 				followNeighborsProbability = internalizationFunction(repetition);
 			}
 		}else{
 			//call disappearing function
+			Logger.logDebug("H"+ getId() + " is in disappearing phase for normativeAction " + normativeAction);
 			followNeighborsProbability = disappearingFunction(noRepetition);
 		}
 	
@@ -970,20 +987,21 @@ public final class Resident extends Human {
 		return followNeighborsProbability;
 	}
 
-	private double disappearingFunction(int noRepetition) {
+	private double disappearingFunction(double noRepetition) {
 		//it's part of sigmoid funtion
 		//=1/(1+0,0078*POWER(0,5;25-noRepetition))
-		double prob = 1/(1+0.0078*Math.pow(0.5,25-noRepetition));
+		double prob = 1.0/(1.0+0.0078*Math.pow(0.5,25-noRepetition));
+//		Logger.logDebug("H"+ getId() + " is in disappearing phase. norepetition : " + noRepetition + ", Math.pow(0.5,25-noRepetition) = " + Math.pow(0.5,25-noRepetition) + " , prob : " + prob);
 		return prob;
 	}
 
-	private double internalizationFunction(int repetition) {
+	private double internalizationFunction(double repetition) {
 //		1-1/repetition^0,5
 		double prob = 1-1/Math.pow(repetition, 0.5);
 		return prob;
 	}
 
-	private double adoptionFunction(int repetition) {
+	private double adoptionFunction(double repetition) {
 		//fun = e ^(x-h) +k; k and h should be find according by choosing two points.
 		//here i find them according to (5, 0,005) , (10, 0,07)
 		double h = 10.35708268;
@@ -992,42 +1010,62 @@ public final class Resident extends Human {
 		return prob;
 	}
 
-	private double observationFunction(int repetition) {
+	private double observationFunction(double repetition) {
 		//linear function
 		double prob = Constants.SLOP_OBSERVATION_PHASE * repetition;
 		return prob;
 	}
 
 
-	private String updateRepetitionGroupNorm(int neighborId,
+	private String getRepetitionGroupNorm(int neighborId,
 			double donationAmount) {
 		ArrayList<String> normativeActions = ifGroupDonationIsNormative(donationAmount, neighborId);
 		ArrayList<String> notRepeatingNorms = getNotRepeatingNorms(neighborId, normativeActions);
-		String returendAction = "";
-		Log.printDebug("H"+ getId() + " : neighborId " + neighborId + " normativeAct of neighbors : " + normativeActions.size());
-		Log.printDebug("H"+ getId() + " getNormListByGroupId(neighborId) is " + (getNormListByGroupId(neighborId) ==null ? "null" : (getNormListByGroupId(neighborId).size())));
-		if(normativeActions != null){
+		String returnedAction = "";		
+		if (normativeActions != null && normativeActions.size() > 0)
+			returnedAction = getMaxRepitiedNorm(normativeActions, neighborId);
+		else if (notRepeatingNorms != null && notRepeatingNorms.size() > 0)
+			returnedAction = getMinNotRepitiedNorm(notRepeatingNorms, neighborId);
+		Logger.logDebug("H" + getId() + " updated norm repetition and returnedAction is : " + returnedAction);
+		return returnedAction;
+	}
+
+	private void updateRepetitionGroupNorm(int neighborId,
+			double donationAmount) {
+		ArrayList<String> normativeActions = ifGroupDonationIsNormative(donationAmount, neighborId);
+		ArrayList<String> notRepeatingNorms = getNotRepeatingNorms(neighborId, normativeActions);
+		String returnedAction = "";
+		Logger.logDebug("H"+ getId() + " : neighborId " + neighborId + " normativeAct of neighbors : " + normativeActions.size() + " notRepeated norms : " + notRepeatingNorms.size());
+		Logger.logDebug("H"+ getId() + " getNormListByGroupId(neighborId) is " + (getNormListByGroupId(neighborId) ==null ? "null" : (getNormListByGroupId(neighborId).size())));
+		if(normativeActions != null && normativeActions.size() > 0){
 			for(String normTtl : normativeActions){
 				if(getNormListByGroupId(neighborId) != null && getNormListByGroupId(neighborId).size() !=0){
 					increaseNormRepetitionByTitle(neighborId, normTtl);
-					Log.printDebug("H" + getId() + " normativeAct not null; norm has member : returendAction : " + returendAction);				
+					Logger.logDebug("H" + getId() + " normativeAct not null; norm has member : returendAction : " + returnedAction);				
 				}
 				else
-					Log.printError("H" + getId() + " has no norm for group " + neighborId);
+					Logger.logError("H" + getId() + " has no norm for group " + neighborId);
 			}			
 		}
-		if(notRepeatingNorms != null){
+		if(notRepeatingNorms != null && notRepeatingNorms.size() > 0){
 			for(String normTtle : notRepeatingNorms){
 				resetExistingNormRepetition(neighborId, normTtle);
-				Log.printDebug("H" + getId() + " has " + notRepeatingNorms.size() + " norms assgined to group G" + neighborId + " that that has not been repeated");
+				Logger.logDebug("H" + getId() + " has " + notRepeatingNorms.size() + " norms assgined to group G" + neighborId + " that that has not been repeated");
 			}
-		}		
-		return returendAction = getMaxRepitiedNorm(normativeActions, neighborId);
+		}
+		
 	}
-
+	
+	private void stepUpdateRepetitionNorms(double donationAmount, int neighborId){
+		Logger.logDebug("H"+ getId() + " is updating repetition of norms.");
+		updateRepetitionGroupNorm(neighborId, donationAmount);
+		updateRepetitionOfPrviousNorms(donationAmount, neighborId);
+		
+	}
 	private ArrayList<String> getNotRepeatingNorms(int neighborId,
 			ArrayList<String> normativeActions) {
 		ArrayList<String> returnedVal = new ArrayList<String>();
+		if(getNormList().get(neighborId) != null)
 		for(Norm norm: getNormList().get(neighborId)){
 			if(normativeActions ==null || !normativeActions.contains(norm.getTitle()) )
 				returnedVal.add(norm.getTitle());
@@ -1035,7 +1073,7 @@ public final class Resident extends Human {
 		return returnedVal;
 	}
 
-	private double calculateValueBasedDonationAmount(int currentGroupId) {
+	private double calculateValueBasedDonationAmount() {
 		double donationAmount = -1.0;
 		if (this.getNettoIncome() >= this.getNecessaryCost()) {
 			double amount = (this.getNettoIncome() - this.getNecessaryCost());
@@ -1068,29 +1106,24 @@ public final class Resident extends Human {
 //		System.out.println("H"+ getId() + " changed his neighborhood from " + oldLivingPlace.name() + " to " + newLivingPlace.name());
 	}*/
 
-	public double getAverageDonationAmountOfGroupMates(int groupId) {
-		ArrayList<Resident> allResidents = SimUtils.getObjectsAll(Resident.class);
-		double neighborsDonationAmount = 0.0;
-		double numOfGroupmates = 0.0;
-		for (Resident person : allResidents) {
-			if(hasGroup(groupId) && person.getId() != this.getId()){
-				neighborsDonationAmount += person.getLastDonationAmount();
-				numOfGroupmates++;
-				if(person.getLastDonationAmount() == 0.0)
-					Log.printDebug("H" + getId() + " chekcing his groupMates: H" + person.getId() + " donate nothing and his donation action was " + person.getLastDonationAmount());
-				}
-		}
-		double avgDonationAmount = neighborsDonationAmount / numOfGroupmates;
-		Log.printDebug("H" + getId() + ", #avgDonationAmount " + avgDonationAmount + "in group G" + groupId);
-		return avgDonationAmount;
-	}
+
 	
 	public double getDonationDifferenceWithAvgNeighbors(){
-			return getAverageDonationAmountOfGroupMates(getLivingGroupId()) - getLastDonationAmount();
+//			return getAverageDonationAmountOfGroupMates(getLivingGroupId()) - getLastDonationAmount();
+		return getAvgNeighborsDonationAmount() - getLastDonationAmount();
 	}
 	
 	public double getAvgDonationNeighbors(){
-		return getAverageDonationAmountOfGroupMates(getLivingGroupId());
+//		return etAverageDonationAmountOfGroupMates(getLivingGroupId());
+		return avgGroupDonationAmount;
+	}
+
+	public double getAvgNeighborsDonationAmount() {
+		return avgGroupDonationAmount;
+	}
+
+	public void setAvgNeighborsDonationAmount(double avgNeighborsDonationAmount) {
+		this.avgGroupDonationAmount = avgNeighborsDonationAmount;
 	}
 	
 }

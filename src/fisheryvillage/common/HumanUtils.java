@@ -16,6 +16,7 @@ import repast.simphony.context.Context;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 import valueframework.AbstractValue;
+import valueframework.common.Log;
 
 /**
 * Supports the Human class with relevant getter functions
@@ -367,5 +368,40 @@ public final strictfp class HumanUtils {
 			}
 		}
 		return true;
+	}
+	
+	public double getNumberOfGrpupMates(int groupId, int humanId){
+		ArrayList<Resident> allResidents = SimUtils.getObjectsAll(Resident.class);
+		double numOfGroupmates = 0.0;
+		for (Resident person : allResidents) 
+			if(person.isMember(groupId) && person.getId() != humanId)
+				numOfGroupmates++;
+		return numOfGroupmates;
+	}
+	
+	private static double getAverageDonationAmountOfGroup(int groupId) {
+		ArrayList<Resident> allResidents = SimUtils.getObjectsAll(Resident.class);
+		double neighborsDonationAmount = 0.0;
+		double numOfGroupmates = 0.0;
+		for (Resident person : allResidents) {
+			if(person.isMember(groupId)){
+				neighborsDonationAmount += person.getLastDonationAmount();
+				numOfGroupmates++;
+/*				if(person.getLastDonationAmount() == 0.0)
+					Log.printDebug("H" + getId() + " chekcing his groupMates: H" + person.getId() + " donate nothing and his donation action was " + person.getLastDonationAmount());
+*/		
+			}
+		}
+		double avgDonationAmount = neighborsDonationAmount / numOfGroupmates;
+		Log.printDebug(", #avgDonationAmount " + avgDonationAmount + "in group G" + groupId);
+		return avgDonationAmount;
+	}
+	
+	public static double[] avgDonationOfNeighbors() {
+		double[] returnedList = new double[HouseType.values().length];
+		returnedList[Constants.CHEAP_GROUP_ID] = getAverageDonationAmountOfGroup(Constants.CHEAP_GROUP_ID);
+		returnedList[Constants.STANDARD_GROUP_ID] = getAverageDonationAmountOfGroup(Constants.STANDARD_GROUP_ID);
+		returnedList[Constants.EXPENSIVE_GROUP_ID] = getAverageDonationAmountOfGroup(Constants.EXPENSIVE_GROUP_ID);
+		return returnedList;
 	}
 }

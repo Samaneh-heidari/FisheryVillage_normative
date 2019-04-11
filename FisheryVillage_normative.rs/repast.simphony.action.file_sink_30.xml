@@ -1,18 +1,16 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>N-individual calculation of avg donation</name>
-  <dataSet>N-non aggregate-calculated average donation</dataSet>
-  <delimiter>;</delimiter>
+  <name>DataCollector quick</name>
+  <dataSet>DataCollector quick</dataSet>
+  <delimiter>,</delimiter>
   <format>TABULAR</format>
   <sourceIds class="linked-hash-set">
     <string>tick</string>
-    <string>Age</string>
-    <string>LivingGroupName</string>
-    <string>LastDonationAmount</string>
-    <string>DonationDifferenceWithAvgNeighbors</string>
-    <string>AvgDonationNeighbors</string>
-    <string>MyValueBasedDonation</string>
-    <string>Money</string>
+    <string>Avg. wealth</string>
+    <string>Factory wealth</string>
+    <string>Migrated</string>
+    <string>% Happy</string>
+    <string>Population</string>
   </sourceIds>
-  <fileName>file Sinks\individualAVGdonation.txt</fileName>
+  <fileName>file Sinks\General.txt</fileName>
   <addTimeStamp>false</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

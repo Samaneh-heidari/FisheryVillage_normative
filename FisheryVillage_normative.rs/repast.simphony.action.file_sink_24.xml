@@ -1,16 +1,14 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>DataCollector Values Satisfied</name>
-  <dataSet>Satisfied Values</dataSet>
+  <name>DataCollector Happiness</name>
+  <dataSet>DataCollector Happiness</dataSet>
   <delimiter>,</delimiter>
   <format>TABULAR</format>
   <sourceIds class="linked-hash-set">
     <string>tick</string>
-    <string>Satisfied values 0</string>
-    <string>Satisfied values 1</string>
-    <string>Satisfied values 2</string>
-    <string>Satisfied values 3</string>
-    <string>Satisfied values 4</string>
+    <string>Happy % adult</string>
+    <string>Happy % elderly</string>
+    <string>Happy % adult + elderly</string>
   </sourceIds>
-  <fileName>file Sinks\ValuesSatisfied.txt</fileName>
+  <fileName>file Sinks\Happiness.txt</fileName>
   <addTimeStamp>false</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

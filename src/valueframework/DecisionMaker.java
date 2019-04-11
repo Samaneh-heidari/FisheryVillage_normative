@@ -285,7 +285,7 @@ public class DecisionMaker {
 	}
 
 	private ArrayList<String> findPositiveAbstractValues(Action action) {
-		ArrayList<String> absValues = new ArrayList<String>(); //TODO: I (Maarten) changed this to String instead of Node. To make sure they are recognized in line absValues.contains(
+		ArrayList<String> absValues = new ArrayList<String>();
 		ArrayList<String> rndTrees = new ArrayList<String>();
 		// add all the related values including negative and positive related
 		// ones.
@@ -312,7 +312,7 @@ public class DecisionMaker {
 	}
 
 	private ArrayList<String> findNegativeAbstractValues(Action action) {
-		ArrayList<String> absValues = new ArrayList<String>(); //TODO: Same as in positive
+		ArrayList<String> absValues = new ArrayList<String>(); 
 		ArrayList<String> rndTrees = new ArrayList<String>();
 		// add all the related values including negative and positive related
 		// ones.
@@ -449,7 +449,6 @@ public class DecisionMaker {
 	public Map<String, Double> sortValuesByThreshold() {
 
 		Map<String, Double> allVals = new HashMap<String, Double>();
-		double sigma = 0;
 		for (String wtKey : valueTrees.keySet()) {
 			double thresh = getWaterTankFromTree(wtKey).getThreshold();
 			allVals.put(wtKey, thresh);			

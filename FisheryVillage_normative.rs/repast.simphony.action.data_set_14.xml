@@ -1,44 +1,62 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>N-Donation amount per neighborhood</name>
+  <name>DataCollector quick</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
     <start>1.0</start>
-    <interval>1.0</interval>
+    <interval>4.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1003857440</hashCode>
+    <hashCode>860906706</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>cheapGroup_donation</string>
+      <string>Avg. wealth</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>cheapGroup_donation</id>
+        <id>Avg. wealth</id>
         <className>fisheryvillage.DataCollector</className>
-        <methodName>donationAmountCheapNeighborhood</methodName>
+        <methodName>getAdultAndElderlyWealthAvg</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>standardGroup_donation</string>
+      <string>Factory wealth</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>standardGroup_donation</id>
+        <id>Factory wealth</id>
         <className>fisheryvillage.DataCollector</className>
-        <methodName>donationAmountSTANDARDNeighborhood</methodName>
+        <methodName>getFactoryWealth</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>expensiveGroup_donation</string>
+      <string>Migrated</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>expensiveGroup_donation</id>
+        <id>Migrated</id>
         <className>fisheryvillage.DataCollector</className>
-        <methodName>donationAmountEXPENSIVENeighborhood</methodName>
+        <methodName>getMigratedOutTotal</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>% Happy</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>% Happy</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getHappyPercentageAdultElderly</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Population</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Population</id>
+        <className>fisheryvillage.DataCollector</className>
+        <methodName>getPopulationNumber</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

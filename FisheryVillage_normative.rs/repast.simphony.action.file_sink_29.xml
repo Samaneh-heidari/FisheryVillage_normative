@@ -1,16 +1,16 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>DataCollector quick</name>
-  <dataSet>DataCollector quick</dataSet>
+  <name>DataCollector Event</name>
+  <dataSet>DataCollector Event</dataSet>
   <delimiter>,</delimiter>
   <format>TABULAR</format>
   <sourceIds class="linked-hash-set">
     <string>tick</string>
-    <string>Avg. wealth</string>
-    <string>Factory wealth</string>
-    <string>Migrated</string>
-    <string>% Happy</string>
-    <string>Population</string>
+    <string>Organize Free</string>
+    <string>Organize Commercial</string>
+    <string>Attend Free</string>
+    <string>Attend Commercial</string>
+    <string>No Money</string>
   </sourceIds>
-  <fileName>file Sinks\General.txt</fileName>
+  <fileName>file Sinks\Event.txt</fileName>
   <addTimeStamp>false</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

@@ -1,7 +1,6 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>N-non aggregate-calculated average donation</name>
-  <type>NON_AGGREGATE</type>
-  <sourceType>fisheryvillage.population.Resident</sourceType>
+  <name>N-Population per Neighborhood</name>
+  <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
@@ -12,64 +11,35 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1572001386</hashCode>
+    <hashCode>-907830749</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Age</string>
+      <string>adults in cheap group</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Age</id>
-        <className>fisheryvillage.population.Resident</className>
-        <methodName>getAge</methodName>
+        <id>adults in cheap group</id>
+        <className>fisheryvillage.property.municipality.Council</className>
+        <methodName>getNumberOfAdultsCheapNeighborhood</methodName>
+        <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>LivingGroupName</string>
+      <string>adults in standard group</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>LivingGroupName</id>
-        <className>fisheryvillage.population.Resident</className>
-        <methodName>getLivingGroupName</methodName>
+        <id>adults in standard group</id>
+        <className>fisheryvillage.property.municipality.Council</className>
+        <methodName>getNumberOfAdultsStandardNeighborhood</methodName>
+        <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Money</string>
+      <string>adults in expensive group</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Money</id>
-        <className>fisheryvillage.population.Resident</className>
-        <methodName>getMoney</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>LastDonationAmount</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>LastDonationAmount</id>
-        <className>fisheryvillage.population.Resident</className>
-        <methodName>getLastDonationAmount</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>DonationDifferenceWithAvgNeighbors</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>DonationDifferenceWithAvgNeighbors</id>
-        <className>fisheryvillage.population.Resident</className>
-        <methodName>getDonationDifferenceWithAvgNeighbors</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>AvgDonationNeighbors</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>AvgDonationNeighbors</id>
-        <className>fisheryvillage.population.Resident</className>
-        <methodName>getAvgDonationNeighbors</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>MyValueBasedDonation</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>MyValueBasedDonation</id>
-        <className>fisheryvillage.population.Resident</className>
-        <methodName>getMyValueBasedDonation</methodName>
+        <id>adults in expensive group</id>
+        <className>fisheryvillage.property.municipality.Council</className>
+        <methodName>getNumberOfAdultsEXPENSIVENeighborhood</methodName>
+        <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>
