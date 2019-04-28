@@ -384,13 +384,15 @@ public final strictfp class HumanUtils {
 		double neighborsDonationAmount = 0.0;
 		double numOfGroupmates = 0.0;
 		for (Resident person : allResidents) {
-			if(person.isMember(groupId)){
-				neighborsDonationAmount += person.getLastDonationAmount();
-				numOfGroupmates++;
-/*				if(person.getLastDonationAmount() == 0.0)
-					Log.printDebug("H" + getId() + " chekcing his groupMates: H" + person.getId() + " donate nothing and his donation action was " + person.getLastDonationAmount());
-*/		
-			}
+//			if (person.getAge() >= Constants.HUMAN_ADULT_AGE && person.getAge() < Constants.HUMAN_ELDERLY_AGE) {				
+				if(person.isMember(groupId)){
+					neighborsDonationAmount += person.getLastDonationAmount();
+					numOfGroupmates++;
+	/*				if(person.getLastDonationAmount() == 0.0)
+						Log.printDebug("H" + getId() + " chekcing his groupMates: H" + person.getId() + " donate nothing and his donation action was " + person.getLastDonationAmount());
+	*/		
+				}
+//			}
 		}
 		double avgDonationAmount = neighborsDonationAmount / numOfGroupmates;
 		Log.printDebug(", #avgDonationAmount " + avgDonationAmount + "in group G" + groupId);

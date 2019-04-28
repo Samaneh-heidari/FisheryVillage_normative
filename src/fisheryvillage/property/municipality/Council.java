@@ -447,7 +447,7 @@ public class Council extends Workplace {
 		int count = 0;
 		
 		for (Resident resident : residents) {
-			String important = resident.getMostImportantValue() ;
+			String important = resident.getTheMostImportantValue() ;
 			if(important.equals(""))
 				Logger.logError("decision maker: cannot find the most important value");
 			String imprtValName = important.split(";")[0];	

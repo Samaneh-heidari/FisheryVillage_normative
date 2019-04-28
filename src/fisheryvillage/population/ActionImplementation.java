@@ -110,8 +110,9 @@ public class ActionImplementation {
 		}
 	}
 	
-	public static void executeActionDonate(String actionTitle, Resident resident, double donationAmount) {
+	public static double executeActionDonate(String actionTitle, Resident resident, double donationAmount) {
 		System.out.println("H" + resident.getId() + " donationAmount " + donationAmount);
+		double returnedValue = 0.0;
 		switch(actionTitle) {
 		case "Donate nothing":
 			Logger.logAction("H" + resident.getId() + " donated nothing");
@@ -119,12 +120,13 @@ public class ActionImplementation {
 			break;
 		case "Donate to council":
 			Logger.logAction("H" + resident.getId() + " donated " + donationAmount);
-			actionDonate(resident, SimUtils.getCouncil(), donationAmount);
+			returnedValue = actionNormativeDonate(resident, SimUtils.getCouncil(), donationAmount);
 			resident.setGraphDonateType(2);
 			break;
 		default:
 			Logger.logError("H" + resident.getId() + " action '" + actionTitle + "' doesn't exist");
 		}
+		return returnedValue;
 	}
 
 	public static void executeActionEvent(String actionTitle, Resident resident) {
@@ -171,12 +173,14 @@ public class ActionImplementation {
 		}
 	}
 	
-	public static void actionDonate(Resident resident, Property property, double donationAmount) {
+	public static double actionNonNormativeDonate(Resident resident, Property property) {
+		double returnedVal = 0.0;
 		if (resident.getNettoIncome() >= resident.getNecessaryCost()) {
 			double amount = (resident.getNettoIncome() - resident.getNecessaryCost()) * Constants.DONATE_FACTOR_OF_LEFT_OVER_MONEY;
 			resident.addMoney(-1 * amount);
 			property.addSavings(amount);
 			Logger.logAction("H" + resident.getId() + " donated " + amount + " money to : " + property.getName() + ", total money is " + resident.getMoney());
+			returnedVal = amount;
 		}
 		else if (resident.getMoney() > Constants.DONATE_MONEY_MINIMUM_SAVINGS_WITHOUT_INCOME) {
 			resident.addMoney(-1 * Constants.DONATE_MONEY_WITHOUT_INCOME);
@@ -187,9 +191,31 @@ public class ActionImplementation {
 		{
 			Logger.logError("H" + resident.getId() + " netto income: " + resident.getNettoIncome() + " not exceeding necessary cost: " + resident.getNecessaryCost());
 		}
+		return returnedVal;
 	}
 	
-
+	public static double actionNormativeDonate(Resident resident, Property property, double donationAmount) {
+		double amount = 0.0;
+		if (resident.getNettoIncome() >= resident.getNecessaryCost()) {
+			amount = Math.min(resident.getNettoIncome() - resident.getNecessaryCost(), donationAmount);
+			resident.addMoney(-1 * amount);
+			property.addSavings(amount);
+			Logger.logAction("H" + resident.getId() + " donated " + amount + " money to : " + property.getName() + ", total money is " + resident.getMoney());
+			
+		}
+		else if (resident.getMoney() > Constants.DONATE_MONEY_MINIMUM_SAVINGS_WITHOUT_INCOME) {
+			amount = Constants.DONATE_MONEY_WITHOUT_INCOME;
+			resident.addMoney(-1 * amount );
+			property.addSavings(amount);
+			Logger.logAction("H" + resident.getId() + " donated " + amount + " money to : " + property.getName() + ", total money is " + resident.getMoney());
+		}
+		else
+		{
+			Logger.logError("H" + resident.getId() + " netto income: " + resident.getNettoIncome() + " not exceeding necessary cost: " + resident.getNecessaryCost());
+		}
+		return amount;
+	}
+	
 	public static Status getStatusFromString(String actionTitle) {
 		
 		switch(actionTitle) {

@@ -10,9 +10,9 @@ import valueframework.common.Log;
 public class ParsNormLogic {
 	public static String getDonationOperation(String normTitle){
 		int indexOfOperator = -1;
-		for(int i = Constants.validOperators.length-1; i >= 0; i--)
+		for(int i = Constants.VALID_OPERATORS.length-1; i >= 0; i--)
         {
-			indexOfOperator = normTitle.indexOf(Constants.validOperators[i]);
+			indexOfOperator = normTitle.indexOf(Constants.VALID_OPERATORS[i]);
 			if(indexOfOperator >= 0)
 				break;
         }

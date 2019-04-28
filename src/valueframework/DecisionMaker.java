@@ -459,7 +459,9 @@ public class DecisionMaker {
 	    return sorted_map;
 	}
 	
-	public String getMostImportantValue(){
+		
+	
+	public String getTheMostImportantValue(){
 		Map<String, Double> sortedValueList = sortValuesByThreshold();
 		for (Map.Entry<String, Double> entry : sortedValueList.entrySet()) {
 			return entry.getKey()+";"+entry.getValue();
@@ -467,8 +469,10 @@ public class DecisionMaker {
 		return "";
 	}
 	
+	
+	
 	public double calculatePreferenceAccordingToValues(double donationAmount) {
-		String important = getMostImportantValue();
+		String important = getTheMostImportantValue();
 		if(important.equals(""))
 			Logger.logError("decision maker: cannot find the most important value");
 		String imprtValName = important.split(";")[0];

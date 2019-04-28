@@ -18,6 +18,7 @@ public class Ecosystem {
 	private int allowedLessFish = 0;
 	private double amountFished = 0; //only used for data collection
 	private double amountRepopulated = 0; //only used for data collection
+	private double offspringMultiplier = 1.0; //this should be only changed for changing fish population while simulating
 	
 	public Ecosystem(int initialFish, GridPoint location) {
 		

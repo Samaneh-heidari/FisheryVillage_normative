@@ -66,7 +66,7 @@ public class VillageBuilder {
 		y = 0;
 		for (int i = 0; i < Constants.NUMBER_OF_HOUSES_STANDARD; ++i) {
 			
-			final GridPoint location = new GridPoint(Constants.GRID_VILLAGE_START + 13 + x * 6, 2 + y * 5);
+			final GridPoint location = new GridPoint(Constants.GRID_VILLAGE_START + Constants.NUMBER_OF_HOUSES_CHEAP + x * 6, 2 + y * 5);
 			new House(SimUtils.getNewPropertyId(), HouseType.STANDARD, Constants.HOUSE_STANDARD_PRICE, Constants.HOUSE_STANDARD_MAINTENANCE, 0, location);
 			if (y == 4) {
 				y = 0;

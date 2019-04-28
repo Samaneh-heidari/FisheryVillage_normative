@@ -391,18 +391,20 @@ public final class Resident extends Human {
 		Vector<ArrayList<House>> availablePropertiesSorted = sortPropertiesByValue(availableProperties, false);
 		if(condition)
 			housing(availablePropertiesSorted);
-		Logger.logDebug("H" + getId() + " end of stepHousing livingPlace is " + HumanUtils.getLivingPlaceType(this));
+		Logger.logDebug("H" + getId() + " end of stepHousing livingPlace is " + HumanUtils.getLivingPlaceType(this) + " Group " + getLivingGroupName());
 		
 	}
 	
-	public String getMostImportantValue(){
-		return decisionMaker.getMostImportantValue();
+	public String getTheMostImportantValue(){
+		return decisionMaker.getTheMostImportantValue();
 	}
+	
+
 	
 	private Vector<ArrayList<House>> sortPropertiesByValue(
 			ArrayList<House> availableProperties, boolean oneHouseType) {
 		Vector<ArrayList<House>> sortedVector = null;
-		String important = getMostImportantValue();
+		String important = getTheMostImportantValue();
 		if(important.equals(""))
 			Logger.logError("decision maker: cannot find the most important value");
 		String imprtValName = important.split(";")[0];
@@ -1113,11 +1115,6 @@ public final class Resident extends Human {
 		return getAvgNeighborsDonationAmount() - getLastDonationAmount();
 	}
 	
-	public double getAvgDonationNeighbors(){
-//		return etAverageDonationAmountOfGroupMates(getLivingGroupId());
-		return avgGroupDonationAmount;
-	}
-
 	public double getAvgNeighborsDonationAmount() {
 		return avgGroupDonationAmount;
 	}

@@ -229,7 +229,7 @@ public class FisheryVillageContextBuilder implements ContextBuilder<Object> {
 		Logger.logMain("- Run Human.stepHousing");
 		for (final Resident resident: residents) {
 			HouseType oldLivingPlace = HumanUtils.getLivingPlaceType(resident);
-			Logger.logDebug("H" + resident.getId() + ", step3Month(), oldLivingPlace : " + oldLivingPlace.name());
+			Logger.logDebug("H" + resident.getId() + ", step3Month(), oldLivingPlace : " + oldLivingPlace.name() + " Group " + resident.getLivingGroupName());
 			resident.stepHousing();
 //			HouseType newLivingPlace = HumanUtils.getLivingPlaceType(resident);
 //			resident.changeGroup(oldLivingPlace, newLivingPlace);

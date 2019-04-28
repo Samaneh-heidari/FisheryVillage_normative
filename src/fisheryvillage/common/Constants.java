@@ -22,7 +22,7 @@ public final class Constants {
 	public static final String ID_VALUE_LAYER = "village value layer";
 	
 	// Initialize world parameters
-	public static final int GRID_WIDTH = 80;
+	public static final int GRID_WIDTH = 90;
 	public static final int GRID_HEIGHT = 40;
 	public static final int GRID_CELL_SIZE = 25;
 	public static final int GRID_SEA_START = GRID_WIDTH - 12;
@@ -171,20 +171,23 @@ public final class Constants {
 	/*
 	 * norm related
 	 */
-	public static final int ADAPTING_NORM_TIME_STEP = 5;
-	public static final int INTERNALIZING_NORM_TIME_STEP = 10;
-	//in other words, a person starts considering something as a norm after it repeats ADAPTING_NORM_TIME_STEP times
-	//and he starts internalizing it after it repeats INTERNALIZING_NORM_TIME_STEP times;
 	
 	/*
 	 * default values for donation norm of each group:
 	 * norms can be dynamically changed. These would be the defualt interpretation of donation norm of each group
 	 */
+	public static final boolean DOANTION_PERCENTAGE = false; //true means use exact amount as a norm instead of percentage when deciding about how much to donate
 	
-	public static final char[] validOperators = {'>','=','<'};
-	public static final String CHEAP_DONATION_DEFAULT_NORM_TITLE = "300 < |donation| < 600";
-	public static final String STANDARD_DONATION_DEFAULT_NORM_TITLE = "200 < |donation| < 250";
-	public static final String EXPENSIVE_DONATION_DEFAULT_NORM_TITLE = "400 < |donation| < 500";
+	public static final char[] VALID_OPERATORS = {'>','=','<'};
+	public static final String CHEAP_DONATION_DEFAULT_NORM_TITLE = "300 < |donation| < 500";
+	public static final String STANDARD_DONATION_DEFAULT_NORM_TITLE = "200 < |donation| < 300";
+	public static final String EXPENSIVE_DONATION_DEFAULT_NORM_TITLE = "300 < |donation| < 500";
+	
+	public static final String CHEAP_DONATION_DEFAULT_NORM_PERCENTAGE_TITLE = "90 < |donation%| < 100";
+	public static final String STANDARD_DONATION_DEFAULT_NORM_PERCENTAGE_TITLE = "50 < |donation%| < 60";
+	public static final String EXPENSIVE_DONATION_DEFAULT_NORM_PERCENTAGE_TITLE = "10 < |donation%| < 20";
+	
+	
 	public static final List NORM_TYPE_LIST = Collections.unmodifiableList(new ArrayList<String>() {{
 	    add("ACTION");
 	}});
@@ -229,9 +232,16 @@ public final class Constants {
 	/*
 	 * values and prioritized neighborhoods
 	 */
-	public static final String[] POWER_NEIGHBORHOOD_PRIORITY = {HouseType.EXPENSIVE.name(), HouseType.STANDARD.name(), HouseType.CHEAP.name()};
+//	public static final String[] POWER_NEIGHBORHOOD_PRIORITY = {HouseType.EXPENSIVE.name(), HouseType.STANDARD.name(), HouseType.CHEAP.name()};
+	public static final String[] POWER_NEIGHBORHOOD_PRIORITY = {HouseType.CHEAP.name(), HouseType.STANDARD.name(), HouseType.EXPENSIVE.name()};
 	public static final String[] SELFDIRECTION_NEIGHBORHOOD_PRIORITY = {HouseType.EXPENSIVE.name(), HouseType.STANDARD.name(), HouseType.CHEAP.name()};
+//	public static final String[] SELFDIRECTION_NEIGHBORHOOD_PRIORITY = {HouseType.CHEAP.name(), HouseType.STANDARD.name(), HouseType.EXPENSIVE.name()};
 	public static final String[] TRADITION_NEIGHBORHOOD_PRIORITY = {HouseType.CHEAP.name(), HouseType.STANDARD.name(), HouseType.EXPENSIVE.name()};
 	public static final String[] UNIVERSALISM_NEIGHBORHOOD_PRIORITY = {HouseType.CHEAP.name(), HouseType.STANDARD.name(), HouseType.EXPENSIVE.name()};
-	
+
+	/*
+	 * simulation setting related variables
+	 */
+	public static final double FISH_POPULATION_CHANGE_MULTIPLIER = 1.0;
+	public static final int FISH_POPULATION_CHANGE_TICK = 200;
 }

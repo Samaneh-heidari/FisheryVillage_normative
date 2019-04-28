@@ -605,13 +605,13 @@ public class DataCollector {
 		int amount = 0;
 		int count = 0;
 		for (Resident resident : SimUtils.getObjectsAll(Resident.class)) {
-			if (resident.getAge() >= Constants.HUMAN_ADULT_AGE && resident.getAge() < Constants.HUMAN_ELDERLY_AGE) {
+//			if (resident.getAge() >= Constants.HUMAN_ADULT_AGE && resident.getAge() < Constants.HUMAN_ELDERLY_AGE) {
 				if (resident.getLivingGroupName().equals(neighborName)) {
 					//total ++;
 					amount += resident.getLastDonationAmount();
 					count ++;
 				}
-			}
+//			}
 		}
 		if(count == 0)
 			return 0;
